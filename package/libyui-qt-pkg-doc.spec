@@ -53,9 +53,8 @@ This package provides the documentation. (HTML & PDF)
 
 %build
 
-export CFLAGS="$RPM_OPT_FLAGS -DNDEBUG"
-export CXXFLAGS="$RPM_OPT_FLAGS -DNDEBUG"
-
+export CFLAGS="%{optflags} -DNDEBUG"
+export CXXFLAGS="$CFLAGS"
 ./bootstrap.sh %{_prefix}
 
 mkdir build
@@ -63,17 +62,12 @@ cd build
 cmake .. \
         -DDOC_DIR=%{_docdir} \
         -DDOCS_ONLY=ON
-
-make %{?jobs:-j%jobs} docs
+make %{?_smp_mflags} docs
 
 %install
 cd build
-make install DESTDIR="$RPM_BUILD_ROOT"
-
-%fdupes -s $RPM_BUILD_ROOT/%_docdir/%{parent}%{so_version}
-
-%clean
-rm -rf "$RPM_BUILD_ROOT"
+%make_install
+%fdupes -s %{buildroot}/%_docdir/%{parent}%{so_version}
 
 %files
 %defattr(-,root,root)

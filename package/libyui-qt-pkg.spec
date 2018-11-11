@@ -43,7 +43,7 @@ BuildRequires:  %{libyui_qt_devel_version}
 BuildRequires:  %{libzypp_devel_version}
 
 Url:            http://github.com/libyui/
-Summary:        Libyui - Qt Package Selector
+Summary:        Qt Package Selector for libyui
 License:        LGPL-2.1 or LGPL-3.0
 Group:          System/Libraries
 
@@ -73,7 +73,7 @@ Obsoletes:      libqdialogsolver1 < 1.4.0
 Conflicts:      libqdialogsolver1 < 1.4.0
 
 Url:            http://github.com/libyui/
-Summary:        Libyui - Qt Package Selector
+Summary:        Qt Package Selector for libyui
 Group:          System/Libraries
 
 %description -n %{bin_name}
@@ -105,10 +105,8 @@ This package has very few dependencies.
 %setup -q -n %{name}-%{version}
 
 %build
-
-export CFLAGS="$RPM_OPT_FLAGS -DNDEBUG"
-export CXXFLAGS="$RPM_OPT_FLAGS -DNDEBUG"
-
+export CFLAGS="%{optflags} -DNDEBUG"
+export CXXFLAGS="$CFLAGS"
 ./bootstrap.sh %{_prefix}
 
 mkdir build
@@ -127,18 +125,14 @@ cmake .. \
         -DLIB_DIR=%{_lib} \
         -DCMAKE_BUILD_TYPE=RELEASE
 %endif
-
-make VERBOSE=1 %{?jobs:-j%jobs}
+make %{?_smp_mflags} VERBOSE=1
 
 %install
 cd build
-make install DESTDIR="$RPM_BUILD_ROOT"
-install -m0755 -d $RPM_BUILD_ROOT/%{_docdir}/%{bin_name}/
-install -m0755 -d $RPM_BUILD_ROOT/%{_libdir}/yui
-install -m0644 ../COPYING* $RPM_BUILD_ROOT/%{_docdir}/%{bin_name}/
-
-%clean
-rm -rf "$RPM_BUILD_ROOT"
+%make_install
+install -m0755 -d %{buildroot}/%{_docdir}/%{bin_name}/
+install -m0755 -d %{buildroot}/%{_libdir}/yui
+install -m0644 ../COPYING* %{buildroot}/%{_docdir}/%{bin_name}/
 
 %post -n %{bin_name} -p /sbin/ldconfig
 
