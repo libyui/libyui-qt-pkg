@@ -829,7 +829,7 @@ YQPackageSelector::addMenus()
     _verifySystemModeAction->setCheckable(true);
 
     _separator = _optionsMenu->addSeparator();
-    _separator.setText( _( "for this run only" ) );
+    _separator->setText( _( "for this run only" ) );
 
     _cleanDepsOnRemoveAction = _optionsMenu->addAction( _( "&Cleanup when deleting packages" ),
 					     this, SLOT( pkgCleanDepsOnRemoveChanged( bool ) ) );
