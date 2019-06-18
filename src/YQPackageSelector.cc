@@ -828,6 +828,7 @@ YQPackageSelector::addMenus()
 					     this, SLOT( pkgVerifySytemModeChanged( bool ) ) );
     _verifySystemModeAction->setCheckable(true);
 
+    _optionsMenu->addSeparator();
 
     _cleanDepsOnRemoveAction = _optionsMenu->addAction( _( "&Cleanup when deleting packages" ),
 					     this, SLOT( pkgCleanDepsOnRemoveChanged( bool ) ) );
