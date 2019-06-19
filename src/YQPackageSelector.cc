@@ -830,7 +830,7 @@ YQPackageSelector::addMenus()
 
     // Widget styles can use the text information in the rendering for sections,
     // or can choose to ignore it and render sections like simple separators.
-    _optionsMenu->addSeparator( _( "Options for this run only..." ) );
+    _optionsMenu->addSection( _( "Options for this run only..." ) );
 
     _cleanDepsOnRemoveAction = _optionsMenu->addAction( _( "&Cleanup when deleting packages" ),
 					     this, SLOT( pkgCleanDepsOnRemoveChanged( bool ) ) );
