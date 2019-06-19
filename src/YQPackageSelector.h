@@ -420,7 +420,6 @@ protected:
     QAction *_showDevelAction;
     QAction *_showDebugAction;
     QAction *_verifySystemModeAction;
-    QAction *_separator;
     QAction *_installRecommendedAction;
     QAction *_cleanDepsOnRemoveAction;
     QAction *_allowVendorChangeAction;
