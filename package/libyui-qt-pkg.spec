@@ -21,8 +21,6 @@ Version:        2.46.7
 Release:        0
 Source:         %{name}-%{version}.tar.bz2
 
-# NOTE: when increasing the so version add also a new Obsoletes dependency
-# at [*] below
 %define so_version 10
 %define bin_name %{name}%{so_version}
 
@@ -65,8 +63,9 @@ Provides:       %{name} = %{version}
 Provides:       yast2-qt-pkg = 2.42.0
 Obsoletes:      yast2-qt-pkg < 2.42.0
 
-# [*] force removal of the old packages, install the newer version (bsc#1148622)
-Obsoletes:      libyui-qt-pkg9
+# force removal of all previous library versions (bsc#1148622),
+# expands to: libyui-qt-pkg1 libyui-qt-pkg2 ... libyui-qt-pkg{so_version - 1}
+Obsoletes:      %(echo `seq -s " " -f "libyui-qt-pkg%.f" $(expr %{so_version} - 1)`)
 
 Provides:       libyui_pkg
 Supplements:    packageand(libyui-qt:yast2-packager)
